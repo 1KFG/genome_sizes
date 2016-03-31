@@ -1,5 +1,5 @@
 # datasets from 1KFG genomes  - http://1000.fungalgenomes.org
-dat <-read.csv("genome_stats.csv",header=T,sep="\t",row.names=1)
+dat <-read.csv("genome_stats.csv",header=T,sep=",",row.names=1)
 summary(dat)
 pdf("genome_size_gene_stat.pdf")
 
