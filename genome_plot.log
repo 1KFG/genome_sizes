@@ -1,0 +1,70 @@
+
+R version 3.3.0 (2016-05-03) -- "Supposedly Educational"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # datasets from 1KFG genomes  - http://1000.fungalgenomes.org
+> dat <-read.csv("genome_stats.csv",header=T,sep=",",row.names=1)
+> summary(dat)
+     genome             CDS       
+ Min.   :  2.188   Min.   : 1831  
+ 1st Qu.: 24.826   1st Qu.: 8679  
+ Median : 35.233   Median :11600  
+ Mean   : 38.773   Mean   :12029  
+ 3rd Qu.: 45.827   3rd Qu.:15009  
+ Max.   :177.557   Max.   :35274  
+> pdf("genome_size_gene_stat.pdf")
+> 
+> #boxplot(dat$genome,main="Genome Size")
+> #boxplot(dat$CDS,main="CDS count")
+> plot(dat$genome,dat$CDS,main="Fungal genome size vs CDS count (N=338)",xlab="Genome Size",ylab="Gene count")
+> 
+> png("genome_size_gene_stat.png")
+> plot(dat$genome,dat$CDS,main="Fungal genome size vs CDS count (N=338)",xlab="Genome Size",ylab="Gene count")
+> 
+> fit <- lm(formula = dat$genome ~ dat$CDS)
+> summary(fit)
+
+Call:
+lm(formula = dat$genome ~ dat$CDS)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-24.772  -7.149  -3.056   1.331 128.946 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -4.741581   2.383159   -1.99   0.0475 *  
+dat$CDS      0.003618   0.000182   19.87   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 17.14 on 330 degrees of freedom
+Multiple R-squared:  0.5448,	Adjusted R-squared:  0.5434 
+F-statistic:   395 on 1 and 330 DF,  p-value: < 2.2e-16
+
+> summary(fit)$r.squared
+[1] 0.5448033
+> cor(dat$genome, dat$CDS)**2
+[1] 0.5448033
+> summary(dat)
+     genome             CDS       
+ Min.   :  2.188   Min.   : 1831  
+ 1st Qu.: 24.826   1st Qu.: 8679  
+ Median : 35.233   Median :11600  
+ Mean   : 38.773   Mean   :12029  
+ 3rd Qu.: 45.827   3rd Qu.:15009  
+ Max.   :177.557   Max.   :35274  
+> 
